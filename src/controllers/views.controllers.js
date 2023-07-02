@@ -1,5 +1,5 @@
-import ViewsManagerMongo from "../Dao/persistence/viewsManagerMongo.js";
-import ProductManagerMongo from "../Dao/persistence/productManagerMongo.js";
+import ViewsManagerMongo from "../Dao/managers/mongo/viewsManagerMongo.js";
+import ProductManagerMongo from "../Dao/managers/mongo/productManagerMongo.js";
 
 const viewsManagerMongo = new ViewsManagerMongo();
 const productManagerMongo = new ProductManagerMongo();

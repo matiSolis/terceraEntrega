@@ -1,14 +1,17 @@
-import userModel from "../models/user.model.js"
+import userModel from "../../models/user.model.js"
 import CartManagerMongo from "./cartManagerMongo.js";
-import { createHash } from '../../utils.js';
+import { createHash } from '../../../utils.js';
 
 const cartManagerMongo = new CartManagerMongo();
 
 export default class UserManagerMongo {
-    async addUser(firstName, lastName, age, email, password, role){
+    constructor(){
+        this.model = userModel;
+    };
+    async addUser(firstName, lastName, age, email, password){
         const cartUser = await cartManagerMongo.createNewCart();
         const cartId = cartUser._id;
-        if (!firstName || !lastName || !age || !email || !password || !role ) {
+        if (!firstName || !lastName || !age || !email || !password ) {
             throw new Error(`Faltan datos`);
         };
         const newUser = {
@@ -17,10 +20,9 @@ export default class UserManagerMongo {
             age,
             email,
             password:  createHash(password),
-            cartId,
-            role
+            cartId
         };
-        const result = await userModel.create(newUser);
+        const result = await this.model.create(newUser);
         return result;
     };
     async addUserGitHub(profile){

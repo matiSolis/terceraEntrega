@@ -6,6 +6,9 @@ export default class SessionController {
     async register (req, res) {
         try {
             const user = req.user;
+            const cartResult = await cartController.createNewCart();
+            user.cart = cartResult._id;
+            await user.save();
             res.send({ status: 'success', message: 'User registered' });
         } catch (error) {
             console.log('Error en el registro:', error);
