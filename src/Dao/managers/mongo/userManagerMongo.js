@@ -5,7 +5,7 @@ export class UserManagerMongo {
     constructor(){
         this.model = userModel;
     };
-    async addUser(first_name, last_name, age, email, password){
+    async post ({first_name, last_name, age, email, password}) {
         if (!first_name || !last_name || !age || !email || !password ) {
             throw new Error(`Faltan datos`);
         };
