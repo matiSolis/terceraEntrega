@@ -1,7 +1,8 @@
 import CartManagerMongo from "../Dao/managers/mongo/cartManagerMongo.js";
+import TicketManagerMongo from "../Dao/managers/mongo/ticketManagerMongo.js";
 
 const cartManagerMongo = new CartManagerMongo();
-
+const ticketManagerMongo = new TicketManagerMongo();
 export default class CartController{
     async getAllCarts (req, res) {
         try {
@@ -126,7 +127,7 @@ export default class CartController{
     async purchaseCart (req, res) {
         try {
             const idCart = req.params.cid;
-            const result = await cartManagerMongo.purchaseCart(idCart);
+            const result = await ticketManagerMongo.purchaseCart(idCart);
             res.status(200).send({
                 status: 'success',
                 result
