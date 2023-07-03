@@ -1,14 +1,8 @@
-import CartController from "./cart.controllers.js";
 import passport from "passport";
 
-const cartController = new CartController();
 export default class SessionController {
     async register (req, res) {
         try {
-            const user = req.user;
-            const cartResult = await cartController.createNewCart();
-            user.cart = cartResult._id;
-            await user.save();
             res.send({ status: 'success', message: 'User registered' });
         } catch (error) {
             console.log('Error en el registro:', error);
@@ -33,11 +27,11 @@ export default class SessionController {
                     return res.status(500).send({ status: 'error', error: 'Error en el servidor' });
                 };
                 req.session.user = {
-                first_name: user.first_name,
-                last_name: user.last_name,
-                age: user.age,
-                email: user.email,
-                role: user.role,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    age: user.age,
+                    email: user.email,
+                    role: user.role
                 };
                 if (user.role === 'admin') {
                     return res.redirect('/admin');

@@ -2,11 +2,10 @@ import passport from 'passport';
 import local from 'passport-local';
 import GitHubStrategy from 'passport-github2';
 import { createHash, validatePassword } from '../utils.js';
+import {contactService} from "../repository/index.js";
 import userModel from '../Dao/models/user.model.js';
-import CartController from "../controllers/cart.controllers.js";
 
 const LocalStrategy = local.Strategy;
-const cartController = new CartController();
 
 const initializePassport = () => {
     passport.use('register', new LocalStrategy(
@@ -26,7 +25,7 @@ const initializePassport = () => {
                     age, 
                     password: createHash(password),
                 }
-                const result = await userModel.create(newUser);
+                const result = await contactService.createContact(newUser);
                 return done(null, result, { message: 'Usuario registrado exitosamente' });
             } catch (error) {
                 return done("Error al registrar el usuario: " + error);
@@ -62,7 +61,6 @@ const initializePassport = () => {
             console.log(profile);
             const user = await userModel.findOne({email: profile._json.email});
             if(!user){
-                const createCart = await cartController.createNewCart();
                 const email = profile._json.email || `${profile._json.name}@github.com`;
                 const newUser = {
                     first_name: profile._json.name,
@@ -70,10 +68,9 @@ const initializePassport = () => {
                     email: email,
                     age:18,
                     password: '',
-                    cart: createCart._id,
                     role: 'User'
                 };
-                const result = await userModel.create(newUser);
+                const result = await contactService.createContact(newUser);
                 done(null, result);
             }else{
                 done(null, user);
