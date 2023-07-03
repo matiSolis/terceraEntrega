@@ -4,6 +4,10 @@ import mongoose from 'mongoose';
 
 const collection = 'tickets';
 
+const generatePurchaseDatetime = () => {
+    return new Date();
+};
+
 const ticketSchema = new mongoose.Schema({
     code:{
         type: String,
@@ -16,7 +20,7 @@ const ticketSchema = new mongoose.Schema({
         default: generatePurchaseDatetime
     },
     amount:{
-        amount: Number,
+        type: Number,
         required: true
     },
     purchaser:{
@@ -26,9 +30,6 @@ const ticketSchema = new mongoose.Schema({
     }
 });
 
-const generatePurchaseDatetime = () => {
-    return new Date();
-};
 ticketSchema.plugin(mongoosePaginate);
 ticketSchema.virtual('purchaserEmail', {
     ref: 'users',

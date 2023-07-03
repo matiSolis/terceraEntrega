@@ -14,12 +14,16 @@
                     <a class="nav-link" href="/products">PRODUCTOS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/carts/645bfaa4a2ea00536a2519d3">CARRITO</a>
+                    <a class="nav-link" href="/chat">CHAT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/carts/{{user.cart}}">CARRITO</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle bg-body-$green-900" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">PERFIL</a>
                         <ul class="dropdown-menu bg-body-$green-900">
-                            <p class="dropdown-item">NOMBRE:  {{user.name}}</p>
+                            <p class="dropdown-item">NOMBRE:  {{user.first_name}}</p>
+                            <p class="dropdown-item">APELLIDO:  {{user.last_name}}</p>
                             <p class="dropdown-item">EMAIL:  {{user.email}}</p>
                             <p class="dropdown-item">EDAD:  {{user.age}} </p>
                             <li><hr class="dropdown-divider"></li>

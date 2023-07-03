@@ -9,8 +9,9 @@ router.get('/:cid', cartController.getCartById);
 router.get('/:cid/detail', cartController.getDetailsInCart);
 router.post('/', cartController.createNewCart);
 router.post('/:cid/products/:pid', cartController.addProductInCart);
-router.delete('/:cid', cartController.clearCart);
 router.put('/:cid/products/:pid', cartController.updateProductQuantity);
 router.put('/:cid', cartController.addProductsToCart);
+router.put('/:cid/purchase', cartController.purchaseCart);
+router.delete('/:cid', cartController.clearCart);
 
 export default router;

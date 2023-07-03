@@ -78,15 +78,15 @@ export default class CartController{
     async clearCart (req, res) {
         try {
             const idCart = req.params.cid;
-            await cartManagerMongo.clearCart(idCart);
+            const result = await cartManagerMongo.clearCart(idCart);
             res.status(200).send({
                 status: "Success",
-                msg: "Carrito vaciado exitosamente"
+                result
             });
         } catch (error) {
             res.status(400).send({
                 status: "Error",
-                msg: "No se puede vaciar el carrito"
+                msg: "No se puede vaciar el carrito."
             });
         };
     };
@@ -95,15 +95,15 @@ export default class CartController{
             const idCart = req.params.cid;
             const idProduct = req.params.pid;
             const quantity = req.body.quantity;
-            await cartManagerMongo.updateProductQuantity(idCart, idProduct, quantity);
+            const result = await cartManagerMongo.updateProductQuantity(idCart, idProduct, quantity);
             res.status(200).send({
                 status: "success",
-                msg: "Cantidad del producto actualizada exitosamente"
+                result
             });
         } catch (error) {
             res.status(400).send({
                 status: "Error",
-                msg: "No se puede actualizar la cantidad del producto en el carrito"
+                msg: "No se puede actualizar la cantidad del producto en el carrito."
             });
         };
     };
@@ -111,15 +111,30 @@ export default class CartController{
         try {
             const idCart = req.params.cid;
             const products = req.body;
-            await cartManagerMongo.addProductsToCart(idCart, products);
+            const result = await cartManagerMongo.addProductsToCart(idCart, products);
             res.status(200).send({
                 status: 'success',
-                message: 'Productos agregados al carrito exitosamente',
+                result,
             });
         } catch (error) {
             res.status(400).send({
                 status: 'error',
                 message: 'No se pudieron agregar los productos al carrito',
+            });
+        };
+    };
+    async purchaseCart (req, res) {
+        try {
+            const idCart = req.params.cid;
+            const result = await cartManagerMongo.purchaseCart(idCart);
+            res.status(200).send({
+                status: 'success',
+                result
+            });
+        } catch (error) {
+            res.status(400).send({
+                status: 'error',
+                message: 'No se puede efectuar la compra.',
             });
         }
     };
