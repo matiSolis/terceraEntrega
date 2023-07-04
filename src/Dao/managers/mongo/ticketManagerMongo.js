@@ -1,5 +1,6 @@
 import cartModel from "../../models/cart.model.js";
 import ticketModel from "../../models/ticket.model.js";
+import userModel from "../../models/user.model.js";
 import {code, date} from "../../../utils.js"
 
 export default class TicketManagerMongo{
@@ -13,25 +14,26 @@ export default class TicketManagerMongo{
                 product.stock -= productInCart.quantity;
                 await product.save();
                 totalAmount += product.price * productInCart.quantity;
-                productsWithStock.push({
-                    product: product._id,
-                    quantity: productInCart.quantity
-                });
+            } else {
+                totalAmount += product.price * product.stock;
+                productsWithStock.push(productInCart);
+                product.stock -= productInCart.quantity;
+                await product.save();
             };
         };
         const generateCode = await code();
         const generateDate = await date();
+        const user = await userModel.findOne({ cart: idCart });
+        const purchaserEmail = user.email;
         const ticketData = {
             code: generateCode,
             purchase_dateTime: generateDate,
-            amount: totalAmount
+            amount: totalAmount,
+            purchaser: purchaserEmail
         };
-        console.log(ticketData);
         const ticket = await ticketModel.create(ticketData);
-        if (productsWithStock.length === cart.products.length) {
-            cart.products = [];
-            await cart.save();
-        };
+        cart.products = productsWithStock;
+        await cart.save();
         return ticket;
     };
 };

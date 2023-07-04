@@ -12,8 +12,6 @@ switch (persistence) {
     break;
     case "memory":
     break;
-    case "sql":
-        break;
 };
 
 export {contactsDao}

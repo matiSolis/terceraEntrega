@@ -1,8 +1,6 @@
 /- Errores:
 
-    {1- No me registra con github.}
-    {2- No me crea el usuario desde la pagina.}
-    {3- No me genera el ticket, pero si me descuenta la cantidad de productos que hay en el carrito del stock del producto}
+    {1- Me crea el usuario perfectamente, pero no me logea desde la pagina.}
 
 /- Falta:
 

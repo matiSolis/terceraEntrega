@@ -39,6 +39,7 @@ app.set('view engine', 'handlebars');
 app.use('/',viewsRouter);
 app.use('/admin', adminRouter);
 app.use('/api/products/', productRouter);
+app.use('/api/chat/', productRouter);
 app.use('/api/carts/', cartRouter);
 app.use('/api/session', sessionRouter);
 //server

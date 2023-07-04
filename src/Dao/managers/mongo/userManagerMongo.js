@@ -30,18 +30,6 @@ export class UserManagerMongo {
         const result = await this.model.create(newUser);
         return result;
     };
-    async addUserGitHub(profile){
-        const newUser = {
-            first_name: profile._json.name,
-            last_name: '',
-            email: profile._json.email,
-            age:18,
-            password: '',
-            role: 'User'
-        };
-        const result = await this.model.create(newUser);
-        return result;
-    };
     async findUserByEmail(username){
         const user = await this.model.findOne({email:username});
         return user;

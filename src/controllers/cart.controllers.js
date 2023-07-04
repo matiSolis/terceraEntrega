@@ -128,6 +128,7 @@ export default class CartController{
         try {
             const idCart = req.params.cid;
             const result = await ticketManagerMongo.purchaseCart(idCart);
+            console.log(result);
             res.status(200).send({
                 status: 'success',
                 result
