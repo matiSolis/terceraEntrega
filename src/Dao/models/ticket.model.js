@@ -18,22 +18,20 @@ const ticketSchema = new mongoose.Schema({
         required: true
     },
     purchaser:{
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: "users",
-        // required: true
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
         required: true
     }
 });
 
 ticketSchema.plugin(mongoosePaginate);
-// ticketSchema.virtual('purchaserEmail', {
-//     ref: 'users',
-//     localField: 'purchaser',
-//     foreignField: '_id',
-//     justOne: true
-// });
-// ticketSchema.set('toObject', { virtuals: true });
-// ticketSchema.set('toJSON', { virtuals: true });
+ticketSchema.virtual('purchaserEmail', {
+    ref: 'users',
+    localField: 'purchaser',
+    foreignField: '_id',
+    justOne: true
+});
+ticketSchema.set('toObject', { virtuals: true });
+ticketSchema.set('toJSON', { virtuals: true });
 const ticketModel = mongoose.model(collection, ticketSchema);
 export default ticketModel;

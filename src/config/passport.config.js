@@ -1,7 +1,7 @@
 import passport from 'passport';
 import local from 'passport-local';
 import GitHubStrategy from 'passport-github2';
-import { createHash, validatePassword } from '../utils.js';
+import { validatePassword } from '../utils.js';
 import {contactService} from "../repository/index.js";
 import userModel from '../Dao/models/user.model.js';
 
@@ -23,7 +23,7 @@ const initializePassport = () => {
                     last_name, 
                     email, 
                     age, 
-                    password: createHash(password),
+                    password
                 }
                 const result = await contactService.createContact(newUser);
                 return done(null, result, { message: 'Usuario registrado exitosamente' });
@@ -62,21 +62,22 @@ const initializePassport = () => {
             const user = await userModel.findOne({email: profile._json.email});
             if(!user){
                 const email = profile._json.email || `${profile._json.name}@github.com`;
+                const nameParts = profile._json.name.split(' ');
                 const newUser = {
-                    first_name: profile._json.name,
-                    last_name: '',
+                    first_name: nameParts[0],
+                    last_name: nameParts[1] || '',
                     email: email,
                     age:18,
                     password: '',
                     role: 'User'
                 };
-                const result = await contactService.createContact(newUser);
+                const result = await contactService.createContactGitHub(newUser);
                 done(null, result);
             }else{
                 done(null, user);
             }
         }catch(error){
-            return done(null, error);
+            return done(error);
         };
     }));
 };

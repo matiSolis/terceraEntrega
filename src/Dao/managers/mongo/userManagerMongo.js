@@ -19,6 +19,17 @@ export class UserManagerMongo {
         const result = await this.model.create(newUser);
         return result;
     };
+    async postGithub ({first_name, last_name, age, email, password}) {
+        const newUser = {
+            first_name,
+            last_name,
+            age,
+            email,
+            password
+        };
+        const result = await this.model.create(newUser);
+        return result;
+    };
     async addUserGitHub(profile){
         const newUser = {
             first_name: profile._json.name,

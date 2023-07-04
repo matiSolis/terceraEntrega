@@ -1,4 +1,4 @@
-import {CreateContactDto, GetContactDto} from "../Dao/dto/contact.dto.js"
+import {CreateContactDto} from "../Dao/dto/contact.dto.js"
 
 export class ContactRepository{
     constructor(dao) {
@@ -11,6 +11,11 @@ export class ContactRepository{
     async createContact(contact){
         const contactDto = new CreateContactDto(contact);
         const contactCreated = await this.dao.post(contactDto);
+        return contactCreated;
+    };
+    async createContactGitHub(contact){
+        const contactDto = new CreateContactDto(contact);
+        const contactCreated = await this.dao.postGithub(contactDto);
         return contactCreated;
     };
 }

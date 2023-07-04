@@ -24,8 +24,7 @@ export default class TicketManagerMongo{
         const ticketData = {
             code: generateCode,
             purchase_dateTime: generateDate,
-            amount: totalAmount,
-            purchaser: "sarasa@sarasa.com" // pongo esto por default pq al no poder generar user no me crea el schema
+            amount: totalAmount
         };
         console.log(ticketData);
         const ticket = await ticketModel.create(ticketData);
