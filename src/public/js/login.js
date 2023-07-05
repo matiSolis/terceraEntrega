@@ -18,6 +18,6 @@ form.addEventListener('submit', e =>{
             throw new Error('Error de inicio de sesión');
         };
     }).then(data => {
-            window.location.replace('/profile');
+            window.location.replace('/current');
         });
 });

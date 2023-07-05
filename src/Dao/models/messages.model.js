@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import autopopulate from "mongoose-autopopulate";
 
 const collection = 'messages';
 
@@ -22,6 +23,6 @@ schema.virtual('userFirstName', {
     autopopulate: { select: 'first_name' }
 });
 
-schema.plugin(require('mongoose-autopopulate'));
+schema.plugin(autopopulate);
 const messagesModel = mongoose.model(collection, schema);
 export default messagesModel;

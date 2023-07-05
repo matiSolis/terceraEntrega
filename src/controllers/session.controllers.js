@@ -36,7 +36,7 @@ export default class SessionController {
                 if (user.role === 'admin') {
                     return res.redirect('/admin');
                 } else {
-                    return res.send({ status: 'success', payload: user, message: 'Primer logueo!!' });
+                    return res.send({ status: 'success', payload: user, message: 'Logueo de usuario exitoso.' });
                 };
             });
         })(req, res, next);

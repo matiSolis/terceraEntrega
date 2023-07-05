@@ -3,16 +3,20 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import handlebars from "express-handlebars";
 import passport from "passport";
+import { Server } from "socket.io";
 //imports propios
 import "./config/dbConnection.js";
 import { options } from "./config/options.js";
 import __dirname from "./utils.js";
 import cartRouter from "./routes/cart.router.js";
+import chatRouter from "./routes/chat.router.js";
+import currentRouter from "./routes/current.router.js";
 import productRouter from "./routes/product.router.js";
 import sessionRouter from "./routes/session.router.js";
 import adminRouter from "./routes/admin.router.js";
 import viewsRouter  from "./routes/views.router.js";
 import initializePassport from "./config/passport.config.js";
+import messagesModel from "./Dao/models/messages.model.js";
 
 export const PORT = options.server.port;
 const app = express();
@@ -39,10 +43,26 @@ app.set('view engine', 'handlebars');
 app.use('/',viewsRouter);
 app.use('/admin', adminRouter);
 app.use('/api/products/', productRouter);
-app.use('/api/chat/', productRouter);
+app.use('/api/current/', currentRouter);
+app.use('/api/chat/', chatRouter);
 app.use('/api/carts/', cartRouter);
 app.use('/api/session', sessionRouter);
 //server
 const server = app.listen(PORT, ()=>{
     console.log('Servidor funcionando en el puerto: '+PORT);
+});
+
+const io = new Server(server);
+io.on('connection', async Socket => {
+    console.log('socket connected');
+    Socket.on('message', data=>{
+        const newMessage = new messagesModel({
+            user: data.user,
+            message: data.message
+        });
+        io.emit('messageLogs', messages);
+    });
+    Socket.on('authenticated', (data) =>{      
+        Socket.broadcast.emit('newUserConnected', data);
+    });
 });

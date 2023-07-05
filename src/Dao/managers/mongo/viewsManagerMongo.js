@@ -22,7 +22,9 @@ export default class ViewsManagerMongo{
     };
     async currentRender(req,res) {
         try {
-            //falta terminar
+            res.render('/current',{
+                user: req.session.user
+            });
         } catch (error) {
             res.status(500).send({
                 status: "Error",
