@@ -1,8 +1,10 @@
 import passport from "passport";
+import { sendGmail } from "../helpers/sendGmail.js";
 
 export default class SessionController {
     async register (req, res) {
         try {
+            const email = await sendGmail();
             res.send({ status: 'success', message: 'User registered' });
         } catch (error) {
             console.log('Error en el registro:', error);
@@ -31,9 +33,10 @@ export default class SessionController {
                     last_name: user.last_name,
                     age: user.age,
                     email: user.email,
+                    cart: user.cart,
                     role: user.role
                 };
-                if (user.role === 'admin') {
+                if (user.role === "Admin") {
                     return res.redirect('/admin');
                 } else {
                     return res.send({ status: 'success', payload: user, message: 'Logueo de usuario exitoso.' });

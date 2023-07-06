@@ -22,6 +22,8 @@ export default class CartController{
         try{
             const idCart = req.params.cid;
             const result = await cartManagerMongo.getCartById(idCart);
+            console.log(result);
+            console.log(idCart);
             return res.status(200).send({
                 status: "success",
                 result

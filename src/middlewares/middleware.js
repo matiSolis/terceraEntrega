@@ -1,5 +1,5 @@
 export const adminSession = (req, res, next) => {
-    if(req.session.user.role !== 'Admin'){
+    if(req.session.user.role !== "Admin"){
         return res.status(403).send({error: { status:403, message:'Access denied.'}})
     };
     next();

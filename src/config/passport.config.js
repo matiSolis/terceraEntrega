@@ -34,25 +34,16 @@ const initializePassport = () => {
     ));
 
     passport.serializeUser((user, done) => {
-        if (user.role === 'admin') {
-            done(null, { role: 'admin' });
+        if (user.role === "Admin") {
+            done(null, { role: "Admin" });
         } else {
             done(null, user._id);
         }
     });
 
-    passport.deserializeUser(async (serializedUser, done) => {
-        if (serializedUser.role === 'admin') {
-            const admin = {
-                name: 'admin',
-                email: 'adminCoder@coder.com',
-                role: 'admin'
-            };
-            done(null, admin);
-        } else {
-            const user = await userModel.findById(serializedUser);
-            done(null, user);
-        }
+    passport.deserializeUser( async (id, done)=>{
+        const user = await userModel.findById(id);
+        done(null, user)
     });
 
     passport.use('login', new LocalStrategy(
@@ -60,13 +51,13 @@ const initializePassport = () => {
         async (username, password, done) => {
             try {
                 if (username === "adminCoder@coder.com" && password === "adminCod3r123") {
-                    const admin = {
+                    const adminUser = {
                         first_name: "Admin",
                         last_name: "Admin",
-                        email: "adminCoder@coder.com",
-                        role: "admin"
+                        email: username,
+                        role: "Admin"
                     };
-                    return done(null, admin);
+                    return done(null, adminUser);
                 }
                 const user = await userModel.findOne({ email: username });
                 if (!user) {
