@@ -34,11 +34,7 @@ const initializePassport = () => {
     ));
 
     passport.serializeUser((user, done) => {
-        if (user.role === "Admin") {
-            done(null, { role: "Admin" });
-        } else {
             done(null, user._id);
-        }
     });
 
     passport.deserializeUser( async (id, done)=>{
@@ -50,15 +46,15 @@ const initializePassport = () => {
         { usernameField: 'email' },
         async (username, password, done) => {
             try {
-                if (username === "adminCoder@coder.com" && password === "adminCod3r123") {
-                    const adminUser = {
-                        first_name: "Admin",
-                        last_name: "Admin",
-                        email: username,
-                        role: "Admin"
-                    };
-                    return done(null, adminUser);
-                }
+                // if (username === "adminCoder@coder.com" && password === "adminCod3r123") {
+                //     const adminUser = {
+                //         first_name: "Admin",
+                //         last_name: "Admin",
+                //         email: username,
+                //         role: "Admin"
+                //     };
+                //     return done(null, adminUser);
+                // }
                 const user = await userModel.findOne({ email: username });
                 if (!user) {
                     console.log('No existe el usuario');

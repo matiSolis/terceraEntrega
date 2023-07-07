@@ -31,6 +31,19 @@ export default class ViewsController {
             });
         };
     };
+    async chatRender (req, res) {
+        try {
+            const user = req.session.user;
+            const userEmail = user.email;
+            res.render('chat',);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({
+                status: 'Error',
+                msg: 'Error del servidor.',
+            });
+        };
+    };
     async currentRender (req, res) {
         try {
             res.render('current',{ user: req.session.user });

@@ -5,8 +5,11 @@ const chatManagerMongo = new ChatManagerMongo();
 export default class ChatController{
     async getAllMessages (req, res){
         try {
-            const messages = await chatManagerMongo.getMessages();
-            res.status(200).render('chat', {messages});
+            const result = await chatManagerMongo.getMessages();
+            return res.status(200).send({
+                status: "success",
+                result
+            });
         }catch (err) {
             res.status(400).send({
                 status: "Error",

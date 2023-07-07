@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users",
-        required: true
+        require: true
     },
     message: {
         type: String,
@@ -20,7 +20,7 @@ schema.virtual('userFirstName', {
     localField: 'user',
     foreignField: '_id',
     justOne: true,
-    autopopulate: { select: 'first_name' }
+    autopopulate: { select: 'email' }
 });
 
 schema.plugin(autopopulate);
